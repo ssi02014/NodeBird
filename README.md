@@ -1,7 +1,4 @@
 # 💻 NodeBird ToyProject
-
-<br />
-
 ## 📑 기술 스택
 ### Front
 - ReactJs
