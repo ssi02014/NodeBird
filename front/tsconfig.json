@@ -28,17 +28,14 @@
       "pages/*": [
         "pages/*"
       ],
-      "styles/*": [
-        "styles/*"
-      ],
       "redux/*": [
         "redux/*"
       ],
       "types/*": [
         "types/*"
       ],
-      "stlye/*": [
-        "stlye/*"
+      "style/*": [
+        "style/*"
       ],
     },
     "incremental": true
