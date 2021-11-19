@@ -36,7 +36,10 @@
       ],
       "types/*": [
         "types/*"
-      ]
+      ],
+      "stlye/*": [
+        "stlye/*"
+      ],
     },
     "incremental": true
   },
