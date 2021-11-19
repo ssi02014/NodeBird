@@ -19,27 +19,12 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      "components/*": [
-        "components/*"
-      ],
-      "config/*": [
-        "config/*"
-      ],
-      "pages/*": [
-        "pages/*"
-      ],
-      "styles/*": [
-        "styles/*"
-      ],
-      "redux/*": [
-        "redux/*"
-      ],
-      "types/*": [
-        "types/*"
-      ],
-      "stlye/*": [
-        "stlye/*"
-      ],
+      "components/*": ["components/*"],
+      "config/*": ["config/*"],
+      "pages/*": ["pages/*"],
+      "redux/*": ["redux/*"],
+      "types/*": ["types/*"],
+      "style/*": ["style/*"],
     },
     "incremental": true
   },
