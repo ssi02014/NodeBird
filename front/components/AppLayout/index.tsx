@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import Link from 'next/link';
-import { Menu, Input, Row, Col } from 'antd';
 import LoginForm from 'components/LoginForm';
 import Profile from 'components/Profile';
+import { StyledInput } from './style';
+import { Menu, Row, Col } from 'antd';
+
 
 interface Props {
   children: React.ReactNode;
 }
+
 const AppLayout = ({ children }: Props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   return (
     <div>
       <Menu mode="horizontal">
@@ -19,7 +23,7 @@ const AppLayout = ({ children }: Props) => {
           <Link href="/profile"><a>프로필</a></Link>
         </Menu.Item>
         <Menu.Item>
-         <Input.Search enterButton style={{ verticalAlign: "middle" }} />
+         <StyledInput enterButton />
         </Menu.Item>
         <Menu.Item>
           <Link href="/signup"><a>회원가입</a></Link>

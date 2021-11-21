@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
-import { Button, Form, Input } from 'antd';
 import Link from 'next/link';
+import { ButtonWrapper } from './style';
+import { Button, Form, Input } from 'antd';
 
 const LoginForm = () => {
   const [formValues, setFormValues] = useState({
@@ -44,10 +45,10 @@ const LoginForm = () => {
           required
         />
       </div>
-      <div>
+      <ButtonWrapper>
         <Button type="primary" htmlType="submit" loading={false}>로그인</Button>
         <Link href="/signup"><a><Button>회원가입</Button></a></Link>
-      </div>
+      </ButtonWrapper>
     </Form>
   );
 };
