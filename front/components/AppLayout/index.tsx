@@ -1,8 +1,8 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import LoginForm from 'components/LoginForm';
 import Profile from 'components/Profile';
-import { StyledInput } from './style';
+import { StyledSearchInput } from './style';
 import { Menu, Row, Col } from 'antd';
 
 
@@ -16,22 +16,22 @@ const AppLayout = ({ children }: Props) => {
   return (
     <div>
       <Menu mode="horizontal">
-        <Menu.Item>
+        <Menu.Item key="home">
           <Link href="/"><a>노드버드</a></Link>
         </Menu.Item>
-        <Menu.Item>
+        <Menu.Item key="profile">
           <Link href="/profile"><a>프로필</a></Link>
         </Menu.Item>
-        <Menu.Item>
-         <StyledInput enterButton />
+        <Menu.Item key="search">
+         <StyledSearchInput enterButton />
         </Menu.Item>
-        <Menu.Item>
+        <Menu.Item key="register">
           <Link href="/signup"><a>회원가입</a></Link>
         </Menu.Item>
       </Menu>
       <Row gutter={8}>
         <Col xs={24} md={6}>
-          {isLoggedIn ? <Profile /> : <LoginForm /> }
+          {isLoggedIn ? <Profile setIsLoggedIn={setIsLoggedIn} /> : <LoginForm setIsLoggedIn={setIsLoggedIn} /> }
         </Col>
         <Col xs={24} md={12}>
           {children}

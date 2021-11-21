@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Input } from 'antd';
 
-export const StyledInput = styled(Input.Search)`
+export const StyledSearchInput = styled(Input.Search)`
   vertical-align: middle;
 `;
