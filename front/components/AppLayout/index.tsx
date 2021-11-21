@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { Menu, Input, Row, Col } from 'antd';
+import LoginForm from 'components/LoginForm';
+import Profile from 'components/Profile';
 
 interface Props {
   children: React.ReactNode;
 }
 const AppLayout = ({ children }: Props) => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   return (
     <div>
       <Menu mode="horizontal">
@@ -24,7 +27,7 @@ const AppLayout = ({ children }: Props) => {
       </Menu>
       <Row gutter={8}>
         <Col xs={24} md={6}>
-          왼쪽메뉴
+          {isLoggedIn ? <Profile /> : <LoginForm /> }
         </Col>
         <Col xs={24} md={12}>
           {children}

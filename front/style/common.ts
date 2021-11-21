@@ -9,6 +9,14 @@ const GlobalStyle = createGlobalStyle`
   body {
     box-sizing: border-box;
   }
+
+  ul,li, ol {
+    list-style: none;
+  }
+  
+  a {
+    text-decoration: none;
+  }
 `
 
 export default GlobalStyle;
