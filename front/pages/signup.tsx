@@ -1,17 +1,16 @@
 import AppLayout from 'components/AppLayout';
 import React from 'react';
 import Head from 'next/head';
+import RegisterForm from 'components/RegisterForm';
 
 const SignUp = () => {
   return (
-    <>
+    <AppLayout>
       <Head>
         <title>회원가입 | NodeBird</title>
       </Head>
-      <AppLayout>
-        회원가입 페이지
-      </AppLayout>
-    </>
+      <RegisterForm />
+    </AppLayout>
   );
 };
 

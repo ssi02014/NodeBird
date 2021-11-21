@@ -25,6 +25,7 @@
       "redux/*": ["redux/*"],
       "types/*": ["types/*"],
       "style/*": ["style/*"],
+      "hooks/*": ["hooks/*"],
     },
     "incremental": true
   },
