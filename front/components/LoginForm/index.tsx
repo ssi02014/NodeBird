@@ -1,23 +1,29 @@
-import React, { Dispatch, SetStateAction, useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import Link from 'next/link';
-import { ButtonWrapper, FormWrapper } from './style';
-import { Button, Form, Input } from 'antd';
 import useInput from 'hooks/useInput';
+import { useDispatch } from 'react-redux';
+import { loginAction } from 'redux/reducers/userReducer';
+import { ButtonWrapper, FormWrapper } from './style';
+import { Button, Input } from 'antd';
 
 interface Props {
-  setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
 }
 
-const LoginForm = ({ setIsLoggedIn } : Props) => {
+const LoginForm = ({ } : Props) => {
   const { formValues, onChange } = useInput({
     id: "",
     password: "",
   });
 
+  const dispatch = useDispatch();
+
   const onSubmit = useCallback(() => {
     const { id, password } = formValues;
-    console.log(id, password);
-    setIsLoggedIn(true);
+
+    if (id && password) {
+      const data = { id, password };
+      dispatch(loginAction(data));
+    }
   }, [formValues]);
 
   return (

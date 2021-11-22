@@ -4,6 +4,8 @@ import LoginForm from 'components/LoginForm';
 import Profile from 'components/Profile';
 import { StyledSearchInput } from './style';
 import { Menu, Row, Col } from 'antd';
+import { useSelector } from 'react-redux';
+import { RootState } from 'redux/reducers';
 
 
 interface Props {
@@ -11,7 +13,8 @@ interface Props {
 }
 
 const AppLayout = ({ children }: Props) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { isLoggedIn } = useSelector((state: RootState) => state.user.user);
 
   return (
     <div>
@@ -31,7 +34,7 @@ const AppLayout = ({ children }: Props) => {
       </Menu>
       <Row gutter={8}>
         <Col xs={24} md={6}>
-          {isLoggedIn ? <Profile setIsLoggedIn={setIsLoggedIn} /> : <LoginForm setIsLoggedIn={setIsLoggedIn} /> }
+          {isLoggedIn ? <Profile /> : <LoginForm /> }
         </Col>
         <Col xs={24} md={12}>
           {children}
