@@ -13,7 +13,6 @@ interface Props {
 }
 
 const AppLayout = ({ children }: Props) => {
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { isLoggedIn } = useSelector((state: RootState) => state.user.user);
 
   return (

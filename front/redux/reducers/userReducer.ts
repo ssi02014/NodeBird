@@ -32,7 +32,6 @@ export const logoutAction = () => ({
 type UserAction = 
   ReturnType<typeof loginAction> | 
   ReturnType<typeof logoutAction> 
-  // ReturnType<typeof HYDRATE>
 
 // (이전 상태, 액션) => 다음 상태
 const user = (

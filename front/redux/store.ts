@@ -1,5 +1,5 @@
-import { createWrapper, MakeStore } from "next-redux-wrapper";
-import { createStore, compose, applyMiddleware, Middleware, StoreEnhancer, Store, AnyAction } from "redux";
+import { createWrapper } from "next-redux-wrapper";
+import { createStore, compose, applyMiddleware, Middleware, StoreEnhancer } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import createSagaMiddleware from "redux-saga";
 import reducers from "./reducers";

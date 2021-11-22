@@ -6,10 +6,7 @@ import { loginAction } from 'redux/reducers/userReducer';
 import { ButtonWrapper, FormWrapper } from './style';
 import { Button, Input } from 'antd';
 
-interface Props {
-}
-
-const LoginForm = ({ } : Props) => {
+const LoginForm = () => {
   const { formValues, onChange } = useInput({
     id: "",
     password: "",
