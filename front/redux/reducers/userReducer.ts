@@ -34,13 +34,13 @@ const user = (
   action: UserAction
 ) => {
   switch(action.type) {
-    case 'LOG_IN': 
+    case LOG_IN: 
       return {
         ...state,
         isLoggedIn: true,
         user: action.data,
       }
-    case 'LOG_OUT': 
+    case LOG_OUT: 
       return {
         ...state,
         isLoggedIn: false,

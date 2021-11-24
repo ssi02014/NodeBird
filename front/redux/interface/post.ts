@@ -1,3 +1,28 @@
+
+export interface ImageSrc {
+  src: string;
+};
+
+export interface Comments {
+  User: {
+    nickname: string;
+  },
+  content: string;
+};
+
+export interface MainPost {
+  id: number,
+  User: {
+    id: number,
+    nickname: string,
+  },
+  content: string,
+  Images: ImageSrc[]
+  Comments: Comments[],
+};
+
 export interface PostState {
-  mainPosts: any[];
-}
+  mainPosts: MainPost[];
+  imagePaths: string[];
+  postAdded: boolean;
+};
