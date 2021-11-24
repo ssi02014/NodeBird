@@ -49,7 +49,7 @@ const dummyPost = {
     id: 1,
     nickname: '제로초',
   },
-  Image: [],
+  Images: [],
   Comments: [],
 }
 
@@ -61,7 +61,7 @@ const PostReducer = (state = initialState, action: PostAction) => {
     case ADD_POST:
       return {
         ...state,
-        mainPost: [ dummyPost, ...state.mainPosts ],
+        mainPosts: [ dummyPost, ...state.mainPosts ],
         postAdded: true,
       }
     default:

@@ -10,19 +10,19 @@ export interface Comments {
   content: string;
 };
 
-export interface MainPost {
-  id: number,
+export interface MainPosts {
+  id: number;
   User: {
-    id: number,
-    nickname: string,
-  },
-  content: string,
-  Images: ImageSrc[]
-  Comments: Comments[],
+    id: number;
+    nickname: string;
+  }
+  content: string;
+  Images: ImageSrc[];
+  Comments: Comments[];
 };
 
 export interface PostState {
-  mainPosts: MainPost[];
+  mainPosts: MainPosts[];
   imagePaths: string[];
   postAdded: boolean;
 };
