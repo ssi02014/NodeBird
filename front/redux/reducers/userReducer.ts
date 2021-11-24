@@ -1,17 +1,12 @@
 import { LOG_IN, LOG_OUT } from "redux/types";
 import { HYDRATE } from 'next-redux-wrapper';
-import { Data, HydratePayload, UserState } from "redux/interface/user";
+import { Data, UserState } from "redux/interface/user";
 
 const initialState: UserState = {
-  user: {
-    isLoggedIn: false,
-    user: null,
-    signUpData : {},
-    loginData: {},
-  },
-  post : {
-    mainPosts: [],
-  }
+  isLoggedIn: false,
+  user: null,
+  signUpData : {},
+  loginData: {},
 };
 
 export const loginAction = (data: Data) => ({
@@ -36,32 +31,20 @@ type UserAction =
 // (이전 상태, 액션) => 다음 상태
 const user = (
   state = initialState, 
-  action: UserAction | HydratePayload
+  action: UserAction
 ) => {
   switch(action.type) {
-    case HYDRATE:
-      console.log(action);
-      return {
-        ...state,
-        ...action.payload
-      }
     case 'LOG_IN': 
       return {
         ...state,
-        user: {
-          ...state.user,
-          isLoggedIn: true,
-          user: action.data,
-        },
+        isLoggedIn: true,
+        user: action.data,
       }
     case 'LOG_OUT': 
       return {
         ...state,
-        user: {
-          ...state.user,
-          isLoggedIn: false,
-          user: null,
-        },
+        isLoggedIn: false,
+        user: null,
       }
     default:
       return state;

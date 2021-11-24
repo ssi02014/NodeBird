@@ -15,17 +15,31 @@
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "isolatedModules": false,
+    "isolatedModules": true,
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      "components/*": ["components/*"],
-      "config/*": ["config/*"],
-      "pages/*": ["pages/*"],
-      "redux/*": ["redux/*"],
-      "types/*": ["types/*"],
-      "style/*": ["style/*"],
-      "hooks/*": ["hooks/*"],
+      "components/*": [
+        "components/*"
+      ],
+      "config/*": [
+        "config/*"
+      ],
+      "pages/*": [
+        "pages/*"
+      ],
+      "redux/*": [
+        "redux/*"
+      ],
+      "types/*": [
+        "types/*"
+      ],
+      "style/*": [
+        "style/*"
+      ],
+      "hooks/*": [
+        "hooks/*"
+      ]
     },
     "incremental": true
   },

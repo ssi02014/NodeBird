@@ -6,18 +6,9 @@ export interface Data {
 }
 
 export interface UserState {
-  user: {
-    isLoggedIn: boolean,
-    user: Data | null,
-    signUpData : Object,
-    loginData: Object,
-  },
-  post : {
-    mainPosts: any[],
-  }
-}
-
-export interface HydratePayload {
-  type: typeof HYDRATE,
-  payload: UserState,
+  isLoggedIn: boolean,
+  user: Data | null,
+  signUpData : Object,
+  loginData: Object,
+  
 }
