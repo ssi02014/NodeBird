@@ -1,11 +1,11 @@
 export interface Data {
-  id: string;
+  id: number;
   password: string;
 };
 
 export interface UserState {
   isLoggedIn: boolean,
-  user: Data | null,
+  me: Data | null,
   signUpData : Object,
   loginData: Object,
 };

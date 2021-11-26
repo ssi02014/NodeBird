@@ -4,7 +4,7 @@ import { Data, UserState } from "redux/interface/user";
 
 const initialState: UserState = {
   isLoggedIn: false,
-  user: null,
+  me: null,
   signUpData : {},
   loginData: {},
 };
@@ -29,7 +29,7 @@ type UserAction =
   ReturnType<typeof logoutAction> 
 
 // (이전 상태, 액션) => 다음 상태
-const user = (
+const userReducer = (
   state = initialState, 
   action: UserAction
 ) => {
@@ -38,17 +38,17 @@ const user = (
       return {
         ...state,
         isLoggedIn: true,
-        user: action.data,
+        me: action.data,
       }
     case LOG_OUT: 
       return {
         ...state,
         isLoggedIn: false,
-        user: null,
+        me: null,
       }
     default:
       return state;
   }
 }
 
-export default user;
+export default userReducer;

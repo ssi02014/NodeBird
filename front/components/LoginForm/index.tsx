@@ -18,7 +18,10 @@ const LoginForm = () => {
     const { id, password } = formValues;
 
     if (id && password) {
-      const data = { id, password };
+      const data = { 
+        id: Number(id), 
+        password 
+      };
       dispatch(loginAction(data));
     }
   }, [formValues]);
