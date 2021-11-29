@@ -9,8 +9,6 @@ const Home: NextPage = () => {
   const { isLoggedIn } = useSelector((state: RootState) => state.user);
   const { mainPosts } = useSelector((state: RootState) => state.post);
 
-  console.log(isLoggedIn);
-  
   return (
     <AppLayout>
       {isLoggedIn && <PostForm />}

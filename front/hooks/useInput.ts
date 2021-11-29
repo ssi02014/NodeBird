@@ -4,6 +4,7 @@ interface InitialValue {
   id?: string;
   nickname?: string;
   password?: string;
+  commentText?: string;
 }
 
 const useInput = (initialValue: InitialValue) => {
