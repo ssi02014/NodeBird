@@ -13,6 +13,9 @@ const initialState: PostState = {
       Images: [
         { src: "https://i.ibb.co/jyBfpfh/bird-of-paradise-flower-6632515-1280.jpg" },
         { src: "https://i.ibb.co/mzC8Ms9/cat-6576397-1280.jpg" },
+        { src: "https://i.ibb.co/mzC8Ms9/cat-6576397-1280.jpg" },
+        { src: "https://i.ibb.co/mzC8Ms9/cat-6576397-1280.jpg" },
+        { src: "https://i.ibb.co/mzC8Ms9/cat-6576397-1280.jpg" },
       ],
       Comments: [
         {

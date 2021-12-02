@@ -1,6 +1,7 @@
 import { PlusOutlined } from '@ant-design/icons';
 import React, { useCallback, useMemo, useState } from 'react';
 import { ImageSrc } from 'redux/interface/post';
+import ImagesZoom from '../ImagesZoom';
 
 interface Props {
   images: ImageSrc[];
@@ -9,7 +10,11 @@ const PostImages = ({ images }: Props) => {
   const [showImagesZoom, setShowImagesZoom] = useState(false);
 
   const onZoom = useCallback(() => {
+    setShowImagesZoom(true);
+  }, []);
 
+  const onClose = useCallback(() => {
+    setShowImagesZoom(false);
   }, []);
 
   const renderImages = useMemo(() => {
@@ -22,6 +27,7 @@ const PostImages = ({ images }: Props) => {
             onClick={onZoom}
             role="presentation" // 클릭해도되지만 안해도 상관없음
           />
+          {showImagesZoom && <ImagesZoom images={images} onClose={onClose} />}
         </>
       )
     } else if (images.length === 2) {
@@ -41,6 +47,7 @@ const PostImages = ({ images }: Props) => {
             onClick={onZoom}
             role="presentation" // 클릭해도되지만 안해도 상관없음
           />
+          {showImagesZoom && <ImagesZoom images={images} onClose={onClose} />}
         </>
       )
     } else {
@@ -63,10 +70,11 @@ const PostImages = ({ images }: Props) => {
             {images.length - 1}
             개의 사진 더보기
           </div>
+          {showImagesZoom && <ImagesZoom images={images} onClose={onClose} />}
         </>
       )
     }
-  }, [images]);
+  }, [images, showImagesZoom]);
 
   return (
     <div>
