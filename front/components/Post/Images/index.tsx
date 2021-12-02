@@ -17,6 +17,8 @@ const PostImages = ({ images }: Props) => {
     setShowImagesZoom(false);
   }, []);
 
+  console.log(showImagesZoom);
+
   const renderImages = useMemo(() => {
     if (images.length === 1) {
       return (

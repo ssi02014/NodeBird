@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ImageSrc } from 'redux/interface/post';
-import { Overlay, Header, SlickWrapper, ImageWrapper, Indicator } from './styled';
+import { Overlay, Header, SlickWrapper, ImageWrapper, Indicator, CloseButton } from './style';
 import Slick from 'react-slick';
 
 interface Props {
@@ -14,7 +14,7 @@ const ImagesZoom = ({ images, onClose }: Props) => {
     <Overlay>
       <Header>
         <h1>상세 이미지</h1>
-        <button onClick={onClose}>X</button>
+        <CloseButton onClick={onClose}>X</CloseButton>
       </Header>
       <SlickWrapper>
         <div>
@@ -31,6 +31,14 @@ const ImagesZoom = ({ images, onClose }: Props) => {
               </ImageWrapper>
             ))}
           </Slick>
+          <Indicator>
+            <div>
+              {currentSlide + 1}
+              {' '}
+              /
+              {images.length}
+            </div>
+          </Indicator>
         </div>
       </SlickWrapper>
     </Overlay>

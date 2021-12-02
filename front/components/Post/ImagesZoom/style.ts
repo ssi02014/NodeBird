@@ -1,5 +1,7 @@
+import { CloseOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 
+// fixed를 화면 전체에 감싸는 방법
 export const Overlay = styled.div`
   position: fixed;
   z-index: 500;
@@ -24,6 +26,7 @@ export const Header = styled.header`
   }
   & button { 
     position: absolute;
+    top: 0;
     right: 0;
     text-align: 0;
     padding: 15px;
@@ -40,11 +43,20 @@ export const SlickWrapper = styled.div`
 export const ImageWrapper = styled.div`
   padding: 32px;
   text-align: center;
-
   & img {
     margin: 0 auto;
+    min-height: 750px;
     max-height: 750px;
   }
+`;
+
+export const CloseButton = styled(CloseOutlined)`
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 15px;
+  line-height: 14px;
+  cursor: pointer;
 `;
 
 export const Indicator = styled.div`
@@ -57,6 +69,7 @@ export const Indicator = styled.div`
     border-radius: 15px;
     display: inline-block;
     text-align: center;
+    background-color: #313131;
     color: #fff;
     font-size: 15px;
   }
