@@ -1,11 +1,23 @@
 import { createWrapper } from "next-redux-wrapper";
-import { createStore, compose, applyMiddleware, Middleware, StoreEnhancer } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
-import createSagaMiddleware from "redux-saga";
-import rootReducer from "./reducers";
+import createSagaMiddleware, { Task } from "redux-saga";
+import rootReducer, { RootState } from "./reducers";
 import rootSaga from './sagas';
+import { 
+  createStore, 
+  compose, 
+  applyMiddleware,
+  Middleware, 
+  StoreEnhancer, 
+  Store, 
+  AnyAction 
+} from "redux";
 
 const initialState = {};
+
+interface SagaStore extends Store<RootState, AnyAction> {
+  sagaTask: Task;
+}
 
 const bindMiddleware = (middleware: Middleware[]): StoreEnhancer => {
   if (process.env.NODE_ENV !== 'production') {
@@ -18,8 +30,8 @@ const configureStore = () => {
   const sagaMiddleware = createSagaMiddleware();
   const middleware = [sagaMiddleware];
 
-  const store:any = createStore(rootReducer, initialState, bindMiddleware([...middleware]));
-  store.sagaTask = sagaMiddleware.run(rootSaga);
+  const store = createStore(rootReducer, initialState, bindMiddleware([...middleware]));
+  (store as SagaStore).sagaTask = sagaMiddleware.run(rootSaga);
   return store;
 }
 
