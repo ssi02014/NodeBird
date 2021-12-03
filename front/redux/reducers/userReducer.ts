@@ -1,5 +1,5 @@
 import { userTypes } from 'redux/Actiontypes/userActionTypes';
-import { Data, UserActions, UserState } from "redux/types/user";
+import { Data, UserActions, UserState } from "redux/types/userTypes";
 
 export const loginRequestAction = (data: Data) => ({
   type: userTypes.LOG_IN_REQUEST,

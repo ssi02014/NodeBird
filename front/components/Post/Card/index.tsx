@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import PostImages from '../Images';
 import { Avatar, Button, Card, Comment, List, Popover } from 'antd';
-import { MainPosts } from 'redux/types/post';
+import { MainPosts } from 'redux/types/postTypes';
 import { EllipsisOutlined, HeartOutlined, HeartTwoTone, MessageOutlined, RetweetOutlined } from '@ant-design/icons';
 import { useSelector } from 'react-redux';
 import { RootState } from 'redux/reducers';

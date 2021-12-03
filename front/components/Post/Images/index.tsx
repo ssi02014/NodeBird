@@ -1,6 +1,6 @@
 import { PlusOutlined } from '@ant-design/icons';
 import React, { useCallback, useMemo, useState } from 'react';
-import { ImageSrc } from 'redux/types/post';
+import { ImageSrc } from 'redux/types/postTypes';
 import ImagesZoom from '../ImagesZoom';
 
 interface Props {

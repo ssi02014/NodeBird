@@ -1,5 +1,11 @@
-import { PostState } from "redux/types/post";
-import { ADD_POST } from "redux/types";
+import { PostActions, PostState } from "redux/types/postTypes";
+import { postTypes } from "redux/Actiontypes/postActionTypes";
+
+export const addPostRequestAction = () => {
+  return {
+    type: postTypes.ADD_POST_REQUEST,
+  }
+}
 
 const initialState: PostState = {
   mainPosts: [
@@ -35,14 +41,7 @@ const initialState: PostState = {
   ],
   imagePaths: [],
   postAdded: false,
-  
 };
-
-export const addPost = () => {
-  return {
-    type: ADD_POST,
-  }
-}
 
 const dummyPost = {
   id: 2,
@@ -53,14 +52,14 @@ const dummyPost = {
   },
   Images: [],
   Comments: [],
-}
+};
 
-// type PostAction
-type PostAction = ReturnType<typeof addPost>
-
-const PostReducer = (state = initialState, action: PostAction) => {
+const PostReducer = (
+  state = initialState, 
+  action: PostActions
+) => {
   switch(action.type) {
-    case ADD_POST:
+    case postTypes.ADD_POST_REQUEST:
       return {
         ...state,
         mainPosts: [ dummyPost, ...state.mainPosts ],

@@ -3,7 +3,7 @@ import { StyledForm } from './style';
 import { Button, Input } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'redux/reducers';
-import { addPost } from 'redux/reducers/postReducer';
+import { addPostRequestAction } from 'redux/reducers/postReducer';
 
 const PostForm = () => {
   const { imagePaths } = useSelector((state:RootState) => state.post);
@@ -29,7 +29,7 @@ const PostForm = () => {
   }, [imageRef.current]);
 
   const onSubmit = useCallback(() => {
-    dispatch(addPost());
+    dispatch(addPostRequestAction());
     
     setFormValues({
       text: "",

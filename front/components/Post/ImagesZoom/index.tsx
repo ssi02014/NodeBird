@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ImageSrc } from 'redux/types/post';
+import { ImageSrc } from 'redux/types/postTypes';
 import { Overlay, Header, SlickWrapper, ImageWrapper, Indicator, CloseButton } from './style';
 import Slick from 'react-slick';
 

@@ -3,7 +3,7 @@ import { Button, Input } from 'antd';
 import { FormWrapper, CustomButton } from './style';
 import useInput from 'hooks/useInput';
 import { useSelector } from 'react-redux';
-import { MainPosts } from 'redux/types/post';
+import { MainPosts } from 'redux/types/postTypes';
 import { RootState } from 'redux/reducers';
 
 interface Props {
