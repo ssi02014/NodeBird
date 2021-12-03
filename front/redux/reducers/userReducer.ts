@@ -1,50 +1,85 @@
-import { LOG_IN, LOG_OUT } from "redux/types";
-import { HYDRATE } from 'next-redux-wrapper';
-import { Data, UserState } from "redux/interface/user";
+import { userTypes } from 'redux/Actiontypes/userActionTypes';
+import { Data, UserActions, UserState } from "redux/types/user";
+
+export const loginRequestAction = (data: Data) => ({
+  type: userTypes.LOG_IN_REQUEST,
+  data,
+});
+export const loginSuccessAction = (data: Data) => ({
+  type: userTypes.LOG_IN_SUCCESS,
+  data,
+});
+export const loginFailureAction = (data: Data) => ({
+  type: userTypes.LOG_IN_FAILURE,
+  data,
+});
+export const logoutRequestAction = () => ({
+  type: userTypes.LOG_OUT_REQUEST,
+});
+export const logoutSuccessAction = () => ({
+  type: userTypes.LOG_OUT_SUCCESS,
+});
+export const logoutFailureAction = () => ({
+  type: userTypes.LOG_OUT_FAILURE,
+});
 
 const initialState: UserState = {
+  isLoggingIn: false,
   isLoggedIn: false,
-  me: null,
+  isLoggingOut: false,
+  me: {
+    id: 0,
+    password: "",
+    nickname: "",
+  },
   signUpData : {},
   loginData: {},
 };
 
-export const loginAction = (data: Data) => ({
-  type: LOG_IN,
-  data,
-});
-
-export const logoutAction = () => ({
-  type: LOG_OUT,
-});
-
-/*
-  모든 액션 객체들에 대한 타입을 준비해줍니다.
-  ReturnType<typeof _____> 는 특정 함수의 반환값을 추론해줍니다
-  상단부에서 액션타입을 선언 할 떄 as const 를 하지 않으면 이 부분이  제대로 작동하지 않습니다.
- */
-
-type UserAction = 
-  ReturnType<typeof loginAction> | 
-  ReturnType<typeof logoutAction> 
-
 // (이전 상태, 액션) => 다음 상태
 const userReducer = (
   state = initialState, 
-  action: UserAction
+  action: UserActions
 ) => {
   switch(action.type) {
-    case LOG_IN: 
+    case userTypes.LOG_IN_REQUEST: 
       return {
         ...state,
-        isLoggedIn: true,
-        me: action.data,
+        isLoggingIn: true,
       }
-    case LOG_OUT: 
+    case userTypes.LOG_IN_SUCCESS:
       return {
         ...state,
+        isLoggingIn: false,
+        isLoggedIn: true,
+        me: { ...action.data, nickname: 'minjae'},
+      }
+    case userTypes.LOG_IN_FAILURE:
+      return {
+        ...state,
+        isLoggingIn: false,
         isLoggedIn: false,
-        me: null,
+      }
+    case userTypes.LOG_OUT_REQUEST: 
+      return {
+        ...state,
+        isLoggingOut: true,
+      }
+    case userTypes.LOG_OUT_SUCCESS:
+      return {
+        ...state,
+        isLoggingOut: false,
+        isLoggedIn: false,
+        me: {
+          id: 0,
+          password: "",
+          nickname: ""
+        },
+      }
+    case userTypes.LOG_OUT_FAILURE:
+      return {
+        ...state,
+        isLoggingOut: false,
       }
     default:
       return state;

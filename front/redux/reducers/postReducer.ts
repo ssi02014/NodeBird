@@ -1,4 +1,4 @@
-import { PostState } from "redux/interface/post";
+import { PostState } from "redux/types/post";
 import { ADD_POST } from "redux/types";
 
 const initialState: PostState = {

@@ -1,6 +1,6 @@
 import { PlusOutlined } from '@ant-design/icons';
 import React, { useCallback, useMemo, useState } from 'react';
-import { ImageSrc } from 'redux/interface/post';
+import { ImageSrc } from 'redux/types/post';
 import ImagesZoom from '../ImagesZoom';
 
 interface Props {
@@ -16,8 +16,6 @@ const PostImages = ({ images }: Props) => {
   const onClose = useCallback(() => {
     setShowImagesZoom(false);
   }, []);
-
-  console.log(showImagesZoom);
 
   const renderImages = useMemo(() => {
     if (images.length === 1) {
