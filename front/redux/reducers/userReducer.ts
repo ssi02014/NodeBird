@@ -1,37 +1,27 @@
 import { userTypes } from 'redux/Actiontypes/userActionTypes';
 import { Data, UserActions, UserState } from "redux/types/userTypes";
+import { dummyUser } from 'utils/dummy';
 
-export const loginRequestAction = (data: Data) => ({
+export const loginRequestAction = (data: any) => ({
   type: userTypes.LOG_IN_REQUEST,
   data,
 });
-export const loginSuccessAction = (data: Data) => ({
-  type: userTypes.LOG_IN_SUCCESS,
-  data,
-});
-export const loginFailureAction = (data: Data) => ({
-  type: userTypes.LOG_IN_FAILURE,
-  data,
-});
+
 export const logoutRequestAction = () => ({
   type: userTypes.LOG_OUT_REQUEST,
 });
-export const logoutSuccessAction = () => ({
-  type: userTypes.LOG_OUT_SUCCESS,
-});
-export const logoutFailureAction = () => ({
-  type: userTypes.LOG_OUT_FAILURE,
-});
 
 const initialState: UserState = {
-  isLoggingIn: false,
-  isLoggedIn: false,
-  isLoggingOut: false,
-  me: {
-    id: 0,
-    password: "",
-    nickname: "",
-  },
+  logInLoading: false,
+  logInDone: false,
+  logInError: null,
+  logOutLoading: false,
+  logOutDone: false,
+  logOutError: null,
+  signUpLoading: false,
+  signUpDone: false,
+  signUpError: null,
+  me: null,
   signUpData : {},
   loginData: {},
 };
@@ -40,46 +30,67 @@ const initialState: UserState = {
 const userReducer = (
   state = initialState, 
   action: UserActions
-) => {
+): UserState => {
   switch(action.type) {
     case userTypes.LOG_IN_REQUEST: 
       return {
         ...state,
-        isLoggingIn: true,
+        logInLoading: true,
+        logInError: null,
+        logInDone: false,
       }
     case userTypes.LOG_IN_SUCCESS:
       return {
         ...state,
-        isLoggingIn: false,
-        isLoggedIn: true,
-        me: { ...action.data, nickname: 'minjae'},
+        logInLoading: false,
+        logInDone: true,
+        me: dummyUser(action.data),
       }
     case userTypes.LOG_IN_FAILURE:
       return {
         ...state,
-        isLoggingIn: false,
-        isLoggedIn: false,
+        logInLoading: false,
+        logInError: action.error,
       }
     case userTypes.LOG_OUT_REQUEST: 
       return {
         ...state,
-        isLoggingOut: true,
+        logOutLoading: true,
+        logOutDone: false,
+        logOutError: null,
       }
     case userTypes.LOG_OUT_SUCCESS:
       return {
         ...state,
-        isLoggingOut: false,
-        isLoggedIn: false,
-        me: {
-          id: 0,
-          password: "",
-          nickname: ""
-        },
+        logInDone: false,
+        logOutLoading: false,
+        logOutDone: true,
+        me: null,
       }
     case userTypes.LOG_OUT_FAILURE:
       return {
         ...state,
-        isLoggingOut: false,
+        logOutLoading: false,
+        logOutError: action.error,
+      }
+    case userTypes.SIGN_UP_REQUEST: 
+      return {
+        ...state,
+        signUpLoading: true,
+        signUpDone: false,
+        signUpError: null,
+      }
+    case userTypes.SIGN_UP_SUCCESS:
+      return {
+        ...state,
+        signUpLoading: false,
+        signUpDone: true,
+      }
+    case userTypes.SIGN_UP_FAILURE:
+      return {
+        ...state,
+        signUpLoading: false,
+        signUpError: action.error,
       }
     default:
       return state;

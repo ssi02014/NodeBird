@@ -1,33 +1,61 @@
-import { all, delay, put, takeLatest } from "@redux-saga/core/effects";
+import { all, delay, put, takeLatest, fork } from "@redux-saga/core/effects";
 import axios from "axios";
+import { postTypes } from '../Actiontypes/postActionTypes';
 
-// function addPostAPI(data: any) {
-//   return axios.post('/api/post', data);
-// }
+function addPostAPI(data: any) {
+  return axios.post('/api/post', data);
+}
 
 function* addPost(action: any) {
   try {
-    // const result:Generator = yield call(loginAPI, action.data);
+    // const result:Generator = yield call(addPostAPI, action.data);
     yield delay(1000);
     yield put({
-      type: 'ADD_POST_SUCCESS',
+      type: postTypes.ADD_POST_SUCCESS,
       // data: result.data
     });
-  } catch (err:any) {
+  } catch (err: any) {
     const { response }= err;
     yield put({
-      type: 'ADD_POST_FAILURE',
+      type: postTypes.ADD_POST_FAILURE,
       data: response.data
     });
   }
 }
 
-  function* watchPost() {
-    yield takeLatest('ADD_POST_REQUEST', addPost);
+function addCommentAPI(data: any) {
+  return axios.post(`/api/post/${data.postId}/comment`, data);
+}
+
+function* addComment(action: any) {
+  try {
+    // const result:Generator = yield call(addCommentAPI, action.data);
+    yield delay(1000);
+    yield put({
+      type: postTypes.ADD_COMMENT_SUCCESS,
+      // data: result.data
+    });
+  } catch (err:any) {
+    const { response }= err;
+    yield put({
+      type: postTypes.ADD_COMMENT_FAILURE,
+      data: response.data
+    });
   }
+}
+
+// watch
+function* watchAddPost() {
+  yield takeLatest(postTypes.ADD_POST_REQUEST, addPost);
+}
+
+function* watchAddComment() {
+  yield takeLatest(postTypes.ADD_COMMENT_REQUEST, addComment);
+}
 
 export default function* postSage() {
   yield all([
-    watchPost,
+    fork(watchAddPost),
+    fork(watchAddComment),
   ]);
 }

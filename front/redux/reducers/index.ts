@@ -1,5 +1,5 @@
 import { HYDRATE } from "next-redux-wrapper";
-import { AnyAction, combineReducers } from "redux";
+import { combineReducers } from "redux";
 
 import user from './userReducer';
 import post from './postReducer';

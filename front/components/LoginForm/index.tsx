@@ -12,7 +12,7 @@ const LoginForm = () => {
     id: "",
     password: "",
   });
-  const { isLoggingIn } = useSelector((state:RootState) => state.user);
+  const { logInLoading } = useSelector((state:RootState) => state.user);
   const dispatch = useDispatch();
 
   const onSubmit = useCallback(() => {
@@ -52,7 +52,7 @@ const LoginForm = () => {
         />
       </div>
       <ButtonWrapper>
-        <Button type="primary" htmlType="submit" loading={isLoggingIn}>로그인</Button>
+        <Button type="primary" htmlType="submit" loading={logInLoading}>로그인</Button>
         <Link href="/signup"><a><Button>회원가입</Button></a></Link>
       </ButtonWrapper>
     </FormWrapper>

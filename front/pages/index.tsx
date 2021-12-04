@@ -6,12 +6,12 @@ import { useSelector } from "react-redux";
 import { RootState } from "redux/reducers";
 import PostCard from "components/Post/Card";
 const Home: NextPage = () => {
-  const { isLoggedIn } = useSelector((state: RootState) => state.user);
+  const { logInDone } = useSelector((state: RootState) => state.user);
   const { mainPosts } = useSelector((state: RootState) => state.post);
 
   return (
     <AppLayout>
-      {isLoggedIn && <PostForm />}
+      {logInDone && <PostForm />}
       {mainPosts.map((post) => (
         <PostCard key={post.id} post={post} />
       ))}

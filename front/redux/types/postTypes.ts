@@ -25,22 +25,48 @@ export interface MainPosts {
 export interface PostState {
   mainPosts: MainPosts[];
   imagePaths: string[];
-  postAdded: boolean;
+  addPostLoading: boolean;
+  addPostDone: boolean;
+  addPostError: boolean | null;
+  addCommentLoading: boolean,
+  addCommentDone: boolean,
+  addCommentError: boolean | null;
 };
 
 export interface AddPostRequest {
   type: typeof postTypes.ADD_POST_REQUEST;
+  data: any;
 }
 
 export interface AddPostSuccess {
   type: typeof postTypes.ADD_POST_SUCCESS;
+  data: any;
 }
 
 export interface AddPostFailure {
   type: typeof postTypes.ADD_POST_FAILURE;
+  error: any;
+}
+
+export interface AddCommentRequest {
+  type: typeof postTypes.ADD_COMMENT_REQUEST;
+  data: any;
+}
+
+export interface AddCommentSuccess {
+  type: typeof postTypes.ADD_COMMENT_SUCCESS;
+  data: any;
+}
+
+export interface AddCommentFailure {
+  type: typeof postTypes.ADD_COMMENT_FAILURE;
+  error: any;
 }
 
 export type PostActions = 
   AddPostRequest |
   AddPostSuccess |
-  AddPostFailure;
+  AddPostFailure |
+  AddCommentRequest |
+  AddCommentSuccess |
+  AddCommentFailure;

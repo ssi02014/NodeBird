@@ -1,9 +1,10 @@
 import { PostActions, PostState } from "redux/types/postTypes";
 import { postTypes } from "redux/Actiontypes/postActionTypes";
 
-export const addPostRequestAction = () => {
+export const addPostRequestAction = (data: any) => {
   return {
     type: postTypes.ADD_POST_REQUEST,
+    data,
   }
 }
 
@@ -40,7 +41,12 @@ const initialState: PostState = {
     }
   ],
   imagePaths: [],
-  postAdded: false,
+  addPostLoading: false,
+  addPostDone: false,
+  addPostError: null,
+  addCommentLoading: false,
+  addCommentDone: false,
+  addCommentError: null,
 };
 
 const dummyPost = {
@@ -57,13 +63,46 @@ const dummyPost = {
 const PostReducer = (
   state = initialState, 
   action: PostActions
-) => {
+): PostState => {
   switch(action.type) {
     case postTypes.ADD_POST_REQUEST:
       return {
         ...state,
+        addPostLoading: true,
+        addPostDone: false,
+        addPostError: null,
+      }
+    case postTypes.ADD_POST_SUCCESS:
+      return {
+        ...state,
         mainPosts: [ dummyPost, ...state.mainPosts ],
-        postAdded: true,
+        addPostLoading: false,
+        addPostDone: true,
+      }
+    case postTypes.ADD_POST_FAILURE:
+      return {
+        ...state,
+        addPostLoading: false,
+        addPostError: action.error,
+      }
+    case postTypes.ADD_COMMENT_REQUEST:
+      return {
+        ...state,
+        addCommentLoading: true,
+        addCommentDone: false,
+        addCommentError: null,
+      }
+    case postTypes.ADD_COMMENT_SUCCESS:
+      return {
+        ...state,
+        addCommentLoading: false,
+        addCommentDone: true,
+      }
+    case postTypes.ADD_COMMENT_FAILURE:
+      return {
+        ...state,
+        addCommentLoading: false,
+        addCommentError: action.error,
       }
     default:
       return state;

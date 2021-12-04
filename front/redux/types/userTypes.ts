@@ -10,45 +10,69 @@ export interface Data {
   id: number;
   password: string;
   nickname?: string;
+  Posts: any[];
+  Followings: any[];
+  Followers: any[];
 };
 
 export interface UserState {
-  isLoggingIn: boolean;
-  isLoggedIn: boolean;
-  isLoggingOut: boolean;
-  me: Data;
+  logInLoading: boolean,
+  logInDone: boolean,
+  logInError: boolean | null,
+  logOutLoading: boolean,
+  logOutDone: boolean,
+  logOutError: boolean | null,
+  signUpLoading: boolean,
+  signUpDone: boolean,
+  signUpError: boolean | null,
+  me: Data | null;
   signUpData : Object;
   loginData: Object;
 };
 
 export interface LoginRequestAction {
   type: typeof userTypes.LOG_IN_REQUEST;
-  data: Data;
+  data: any;
 }
 
 export interface LoginSuccessAction {
   type: typeof userTypes.LOG_IN_SUCCESS;
-  data: Data;
+  data: any;
 }
 
 export interface LoginFailureAction {
   type: typeof userTypes.LOG_IN_FAILURE;
-  data: Data;
+  error: any;
 }
 
 export interface LogoutRequestAction {
   type: typeof userTypes.LOG_OUT_REQUEST;
-  data: Data;
+  data: any;
 }
 
 export interface LogoutSuccessAction {
   type: typeof userTypes.LOG_OUT_SUCCESS;
-  data: Data;
+  data: any;
 }
 
 export interface LogoutFailureAction {
   type: typeof userTypes.LOG_OUT_FAILURE;
-  data: Data;
+  error: any;
+}
+
+export interface signupRequestAction {
+  type: typeof userTypes.SIGN_UP_REQUEST;
+  data: any;
+}
+
+export interface signupSuccessAction {
+  type: typeof userTypes.SIGN_UP_SUCCESS;
+  data: any;
+}
+
+export interface signupFailureAction {
+  type: typeof userTypes.SIGN_UP_FAILURE;
+  error: any;
 }
 
 export type UserActions = 
@@ -57,6 +81,9 @@ export type UserActions =
   LoginFailureAction | 
   LogoutRequestAction | 
   LogoutSuccessAction | 
-  LogoutFailureAction;
+  LogoutFailureAction |
+  signupRequestAction |
+  signupSuccessAction |
+  signupFailureAction;
 
 
