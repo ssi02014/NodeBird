@@ -5,7 +5,7 @@ import { LoadMoreButtonContainer, StyledListItem, StyledList } from './style';
 
 interface Props {
   header: string;
-  data: { nickname: string }[]
+  data: any;
 }
 
 const FollowList = ({ header, data }: Props) => {

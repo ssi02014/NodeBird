@@ -1,26 +1,27 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { StyledForm } from './style';
 import { Button, Input } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'redux/reducers';
 import { addPostRequestAction } from 'redux/reducers/postReducer';
+import useInput from 'hooks/useInput';
 
 const PostForm = () => {
-  const { imagePaths } = useSelector((state:RootState) => state.post);
-  const [ formValues, setFormValues ] = useState({
+  const { imagePaths, addPostDone } = useSelector((state:RootState) => state.post);
+  const [ formValues, onChange, onReset ] = useInput({
     text: "",
   });
   const dispatch = useDispatch();
   const imageRef = useRef<HTMLInputElement>(null);
 
-  const onChange = useCallback((e) => {
-    const { name, value } = e.target;
+  // const onChange = useCallback((e) => {
+  //   const { name, value } = e.target;
 
-    setFormValues({
-      ...formValues,
-      [name]: value, 
-    });
-  }, [formValues]);
+  //   setFormValues({
+  //     ...formValues,
+  //     [name]: value, 
+  //   });
+  // }, [formValues]);
 
   const onClickImage = useCallback(() => {
     if(imageRef.current) {
@@ -29,12 +30,15 @@ const PostForm = () => {
   }, [imageRef.current]);
 
   const onSubmit = useCallback(() => {
-    dispatch(addPostRequestAction());
-    
-    setFormValues({
-      text: "",
-    });
+    const { text } = formValues;
+    dispatch(addPostRequestAction(text));
   }, []);
+
+  useEffect(() => {
+    if (addPostDone) {
+      onReset();
+    }
+  }, [addPostDone]);
   
   return (
     <>

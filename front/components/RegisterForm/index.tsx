@@ -2,17 +2,23 @@ import React, { useCallback, useMemo, useState } from 'react';
 import { Button, Checkbox, Form, Input } from 'antd';
 import { ErrorMessage, ButtonWrapper } from './style';
 import useInput from 'hooks/useInput';
+import { useDispatch, useSelector } from 'react-redux';
+import { userTypes } from 'redux/Actiontypes/userActionTypes';
+import { RootState } from 'redux/reducers';
 
 const RegisterForm= () => {
-  const { formValues, onChange } = useInput({
-    id: "",
+  const [ formValues, onChange ] = useInput({
+    email: "",
     nickname: "",
     password: "",
   });
   const [passwordCheck, setPasswordCheck] = useState(""); 
-  const [term, setTemr] = useState(false);
+  const [term, setTerm] = useState(false);
   const [passwordCheckError, SetPasswordCheckError] = useState(false);
   const [termError, setTermError] = useState(false);
+
+  const dispatch = useDispatch();
+  const { signUpLoading } = useSelector((state: RootState) => state.user);
 
   const onChangePasswordCheck = useCallback((e) => {
     const { value } = e.target;
@@ -23,7 +29,7 @@ const RegisterForm= () => {
   }, [formValues]);
 
   const onChangeTerm = useCallback((e) => {
-    setTemr(e.target.checked);
+    setTerm(e.target.checked);
     setTermError(false);
   }, []);
 
@@ -43,54 +49,61 @@ const RegisterForm= () => {
   }, [formValues, term, passwordCheck]);
 
   const onSubmit = useCallback(() => {
-    const { id, nickname, password } = formValues;
+    const { email, nickname, password } = formValues;
 
     if (validation()) {
-      console.log(id, nickname, password);
+      dispatch({
+        type: userTypes.SIGN_UP_REQUEST,
+        data: { email, nickname, password }
+      });
     }
   }, [formValues, validation]);
 
   return (
     <Form onFinish={onSubmit}>
       <div>
-        <label htmlFor="id">아이디</label>
+        <label htmlFor="register-email">이메일</label>
         <br />
         <Input
-          type="text" 
-          name="id"
+          type="email" 
+          name="email"
+          id="register-email"
           value={formValues.id}
           onChange={onChange}
           required
         />
       </div>
       <div>
-        <label htmlFor="nickname">닉네임</label>
+        <label htmlFor="register-nickname">닉네임</label>
         <br />
         <Input
           type="text" 
           name="nickname"
+          id="register-nickname"
           value={formValues.nickname}
           onChange={onChange}
           required
         />
       </div>
       <div>
-        <label htmlFor="password">패스워드</label>
+        <label htmlFor="register-password">패스워드</label>
         <br />
         <Input
           type="password" 
           name="password"
+          id="register-password"
           value={formValues.password}
           onChange={onChange}
           required
         />
       </div>
       <div>
-        <label htmlFor="passwordCheck">패스워드 확인</label>
+        <label htmlFor="register-passwordCheck">패스워드 확인</label>
         <br />
         <Input
           type="password" 
           name="passwordCheck"
+          id="register-passwordCheck"
           value={passwordCheck}
           onChange={onChangePasswordCheck}
           required
@@ -112,7 +125,7 @@ const RegisterForm= () => {
         )}
       </div>
       <ButtonWrapper>
-        <Button type="primary" htmlType="submit">가입하기</Button>
+        <Button type="primary" htmlType="submit" loading={signUpLoading}>가입하기</Button>
       </ButtonWrapper>
     </Form>
   );

@@ -11,8 +11,8 @@ export interface Data {
   password: string;
   nickname?: string;
   Posts: any[];
-  Followings: any[];
-  Followers: any[];
+  Followings: any[]
+  Followers: any[]
 };
 
 export interface UserState {

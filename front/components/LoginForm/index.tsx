@@ -8,19 +8,19 @@ import { loginRequestAction } from 'redux/reducers/userReducer';
 import { RootState } from 'redux/reducers';
 
 const LoginForm = () => {
-  const { formValues, onChange } = useInput({
-    id: "",
+  const [ formValues, onChange ] = useInput({
+    email: "",
     password: "",
   });
   const { logInLoading } = useSelector((state:RootState) => state.user);
   const dispatch = useDispatch();
 
   const onSubmit = useCallback(() => {
-    const { id, password } = formValues;
+    const { email, password } = formValues;
 
-    if (id && password) {
+    if (email && password) {
       const data = { 
-        id: Number(id), 
+        email: Number(email), 
         password 
       };
       dispatch(loginRequestAction(data));
@@ -30,11 +30,12 @@ const LoginForm = () => {
   return (
     <FormWrapper onFinish={onSubmit}>
       <div>
-        <label htmlFor="id">아이디</label>
+        <label htmlFor="email">이메일</label>
         <br />
         <Input
-          type="text" 
-          name="id"
+          type="email" 
+          name="email"
+          id="email"
           value={formValues.id}
           onChange={onChange}
           required
@@ -46,6 +47,7 @@ const LoginForm = () => {
         <Input
           type="password" 
           name="password"
+          id="password"
           value={formValues.password}
           onChange={onChange}
           required
