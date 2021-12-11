@@ -13,7 +13,7 @@ interface Props {
 }
 
 const AppLayout = ({ children }: Props) => {
-  const { logInDone } = useSelector((state: RootState) => state.user);
+  const { me } = useSelector((state: RootState) => state.user);
 
   return (
     <div>
@@ -33,7 +33,7 @@ const AppLayout = ({ children }: Props) => {
       </Menu>
       <Row gutter={8}>
         <Col xs={24} md={6}>
-          {logInDone ? <Profile /> : <LoginForm /> }
+          {me ? <Profile /> : <LoginForm /> }
         </Col>
         <Col xs={24} md={12}>
           {children}
