@@ -14,15 +14,6 @@ const PostForm = () => {
   const dispatch = useDispatch();
   const imageRef = useRef<HTMLInputElement>(null);
 
-  // const onChange = useCallback((e) => {
-  //   const { name, value } = e.target;
-
-  //   setFormValues({
-  //     ...formValues,
-  //     [name]: value, 
-  //   });
-  // }, [formValues]);
-
   const onClickImage = useCallback(() => {
     if(imageRef.current) {
       imageRef.current.click();

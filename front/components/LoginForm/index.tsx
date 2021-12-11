@@ -8,7 +8,7 @@ import { loginRequestAction } from 'redux/reducers/userReducer';
 import { RootState } from 'redux/reducers';
 
 const LoginForm = () => {
-  const [ formValues, onChange ] = useInput({
+  const [ formValues, onChange, onReset ] = useInput({
     email: "",
     password: "",
   });
@@ -24,9 +24,12 @@ const LoginForm = () => {
         password 
       };
       dispatch(loginRequestAction(data));
+      onReset();
     }
   }, [formValues]);
 
+  console.log(formValues);
+  
   return (
     <FormWrapper onFinish={onSubmit}>
       <div>

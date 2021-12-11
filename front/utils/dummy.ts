@@ -6,5 +6,17 @@ export const dummyUser = (data: any): Data => {
     nickname: 'minjae',
     password: '123',
     id: 1,
+    Posts:[
+      "123",
+      "456",
+    ],
+    Followings: [
+      "123",
+      "456",
+    ],
+    Followers: [
+      "123",
+      "456",
+    ]
   }
 }
