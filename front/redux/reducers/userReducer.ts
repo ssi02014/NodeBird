@@ -41,27 +41,27 @@ const userReducer = (
         logInLoading: true,
         logInError: null,
         logInDone: false,
-      }
+      };
     case userTypes.LOG_IN_SUCCESS:
       return {
         ...state,
         logInLoading: false,
         logInDone: true,
         me: dummyUser(action.data),
-      }
+      };
     case userTypes.LOG_IN_FAILURE:
       return {
         ...state,
         logInLoading: false,
         logInError: action.error,
-      }
+      };
     case userTypes.LOG_OUT_REQUEST: 
       return {
         ...state,
         logOutLoading: true,
         logOutDone: false,
         logOutError: null,
-      }
+      };
     case userTypes.LOG_OUT_SUCCESS:
       return {
         ...state,
@@ -69,51 +69,67 @@ const userReducer = (
         logOutLoading: false,
         logOutDone: true,
         me: null,
-      }
+      };
     case userTypes.LOG_OUT_FAILURE:
       return {
         ...state,
         logOutLoading: false,
         logOutError: action.error,
-      }
+      };
     case userTypes.SIGN_UP_REQUEST: 
       return {
         ...state,
         signUpLoading: true,
         signUpDone: false,
         signUpError: null,
-      }
+      };
     case userTypes.SIGN_UP_SUCCESS:
       return {
         ...state,
         signUpLoading: false,
         signUpDone: true,
-      }
+      };
     case userTypes.SIGN_UP_FAILURE:
       return {
         ...state,
         signUpLoading: false,
         signUpError: action.error,
-      }
+      };
     case userTypes.CHANGE_NICKNAME_REQUEST: 
       return {
         ...state,
         changeNicknameLoading: true,
         changeNicknameDone: false,
         changeNicknameError: null,
-      }
+      };
     case userTypes.CHANGE_NICKNAME_SUCCESS:
       return {
         ...state,
         changeNicknameLoading: false,
         changeNicknameDone: true,
-      }
+      };
     case userTypes.CHANGE_NICKNAME_FAILURE:
       return {
         ...state,
         changeNicknameLoading: false,
         changeNicknameError: action.error,
-      }
+      };
+    case userTypes.ADD_POST_TO_ME:
+      return {
+        ...state,
+        me: {
+          ...state.me,
+          Posts: [{ id: action.data }, ...state.me.Posts],
+        }
+      };
+    case userTypes.REMOVE_POST_OF_ME:
+        return {
+          ...state,
+          me: {
+            ...state.me,
+            Posts: state.me.Posts.filter((v:any) => v.id !== action.data)
+          }
+        };
     default:
       return state;
   }

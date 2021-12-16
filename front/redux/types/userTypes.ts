@@ -11,8 +11,8 @@ export interface Data {
   password: string;
   nickname?: string;
   Posts: any[];
-  Followings: any[]
-  Followers: any[]
+  Followings: { nickname: string }[]
+  Followers: { nickname: string }[]
 };
 
 export interface UserState {
@@ -28,83 +28,94 @@ export interface UserState {
   changeNicknameLoading: boolean,
   changeNicknameDone: boolean,
   changeNicknameError: boolean | null,
-  me: Data | null;
+  me: any;
   signUpData : Object;
   loginData: Object;
 };
 
-export interface LoginRequestAction {
+export interface LoginRequest {
   type: typeof userTypes.LOG_IN_REQUEST;
   data: any;
 }
 
-export interface LoginSuccessAction {
+export interface LoginSuccess {
   type: typeof userTypes.LOG_IN_SUCCESS;
   data: any;
 }
 
-export interface LoginFailureAction {
+export interface LoginFailure {
   type: typeof userTypes.LOG_IN_FAILURE;
   error: any;
 }
 
-export interface LogoutRequestAction {
+export interface LogoutRequest {
   type: typeof userTypes.LOG_OUT_REQUEST;
   data: any;
 }
 
-export interface LogoutSuccessAction {
+export interface LogoutSuccess {
   type: typeof userTypes.LOG_OUT_SUCCESS;
   data: any;
 }
 
-export interface LogoutFailureAction {
+export interface LogoutFailure {
   type: typeof userTypes.LOG_OUT_FAILURE;
   error: any;
 }
 
-export interface signupRequestAction {
+export interface signupRequest {
   type: typeof userTypes.SIGN_UP_REQUEST;
   data: any;
 }
 
-export interface signupSuccessAction {
+export interface signupSuccess {
   type: typeof userTypes.SIGN_UP_SUCCESS;
   data: any;
 }
 
-export interface signupFailureAction {
+export interface signupFailure {
   type: typeof userTypes.SIGN_UP_FAILURE;
   error: any;
 }
 
-export interface changeNicknameRequestAction {
+export interface changeNicknameRequest {
   type: typeof userTypes.CHANGE_NICKNAME_REQUEST;
   data: any;
 }
 
-export interface changeNicknameSuccessAction {
+export interface changeNicknameSuccess {
   type: typeof userTypes.CHANGE_NICKNAME_SUCCESS;
   data: any;
 }
 
-export interface changeNicknameFailureAction {
+export interface changeNicknameFailure {
   type: typeof userTypes.CHANGE_NICKNAME_FAILURE;
   error: any;
 }
 
-export type UserActions = 
-  LoginRequestAction | 
-  LoginSuccessAction | 
-  LoginFailureAction | 
-  LogoutRequestAction | 
-  LogoutSuccessAction | 
-  LogoutFailureAction |
-  signupRequestAction |
-  signupSuccessAction |
-  signupFailureAction |
-  changeNicknameRequestAction |
-  changeNicknameSuccessAction |
-  changeNicknameFailureAction;
+export interface addPostToMeRequset {
+  type: typeof userTypes.ADD_POST_TO_ME;
+  data: any;
+}
 
+export interface RemovePostOfMeRequset {
+  type: typeof userTypes.REMOVE_POST_OF_ME;
+  data: any;
+}
+
+export type UserActions = 
+  LoginRequest | 
+  LoginSuccess | 
+  LoginFailure | 
+  LogoutRequest | 
+  LogoutSuccess | 
+  LogoutFailure |
+  signupRequest |
+  signupSuccess |
+  signupFailure |
+  changeNicknameRequest |
+  changeNicknameSuccess |
+  changeNicknameFailure |
+  addPostToMeRequset |
+  RemovePostOfMeRequset;
 

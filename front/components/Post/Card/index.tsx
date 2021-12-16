@@ -3,11 +3,12 @@ import PostImages from '../Images';
 import { Avatar, Button, Card, Comment, List, Popover } from 'antd';
 import { MainPosts } from 'redux/types/postTypes';
 import { EllipsisOutlined, HeartOutlined, HeartTwoTone, MessageOutlined, RetweetOutlined } from '@ant-design/icons';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'redux/reducers';
 import { CardWrapper } from './style';
 import CommentForm from 'components/Comment/Form';
 import PostCardContent from './Content';
+import { postTypes } from 'redux/Actiontypes/postActionTypes';
 
 interface Props {
   post: MainPosts;
@@ -17,13 +18,20 @@ const PostCard = ({ post }: Props) => {
   const [liked, setLiked] = useState(false);
   const [commentFormOpened, setCommentFormOpened] = useState(false);
   const id = useSelector((state: RootState) => state.user.me?.id);
-
+  const dispatch = useDispatch();
   const onToggleLike = useCallback(() => {
     setLiked(prev => !prev); // 이런식으로 콜백함수를 넣으면 의존성에다 liked를 안넣어도됨
   }, []);
 
   const onToggleComment = useCallback(() => {
     setCommentFormOpened(prev => !prev);
+  }, []);
+
+  const onRemovePost = useCallback(() => {
+    dispatch({
+      type: postTypes.REMOVE_POST_REQUEST,
+      id: post.id,
+    })
   }, []);
 
   const CardActions = useMemo(() => {
@@ -39,7 +47,7 @@ const PostCard = ({ post }: Props) => {
           {id && post.User.id === id ? (
             <>
               <Button>수정</Button>
-              <Button>삭제</Button>
+              <Button onClick={onRemovePost}>삭제</Button>
             </>
           ) : (
             <><Button>신고</Button></>

@@ -1,10 +1,12 @@
 import { postTypes } from "redux/Actiontypes/postActionTypes";
 
 export interface ImageSrc {
+  id: number;
   src: string;
 };
 
 export interface Comments {
+  id: number;
   User: {
     id: number | string;
     nickname: string;
@@ -29,6 +31,9 @@ export interface PostState {
   addPostLoading: boolean;
   addPostDone: boolean;
   addPostError: boolean | null;
+  removePostLoading: boolean,
+  removePostDone: boolean,
+  removePostError: boolean | null;
   addCommentLoading: boolean,
   addCommentDone: boolean,
   addCommentError: boolean | null;
@@ -64,10 +69,28 @@ export interface AddCommentFailure {
   error: any;
 }
 
+export interface RemovePostRequest {
+  type: typeof postTypes.REMOVE_POST_REQUEST;
+  data: any;
+}
+
+export interface RemovePostSuccess {
+  type: typeof postTypes.REMOVE_POST_SUCCESS;
+  data: any;
+}
+
+export interface RemovePostFailure {
+  type: typeof postTypes.REMOVE_POST_FAILURE;
+  error: any;
+}
+
 export type PostActions = 
   AddPostRequest |
   AddPostSuccess |
   AddPostFailure |
   AddCommentRequest |
   AddCommentSuccess |
-  AddCommentFailure;
+  AddCommentFailure |
+  RemovePostRequest |
+  RemovePostSuccess |
+  RemovePostFailure;

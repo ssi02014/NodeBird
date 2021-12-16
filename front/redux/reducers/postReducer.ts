@@ -19,14 +19,15 @@ const initialState: PostState = {
       },
       content: "첫 번째 게시글 #해시태그 #익스프레스",
       Images: [
-        { src: "https://i.ibb.co/jyBfpfh/bird-of-paradise-flower-6632515-1280.jpg" },
-        { src: "https://i.ibb.co/mzC8Ms9/cat-6576397-1280.jpg" },
-        { src: "https://i.ibb.co/mzC8Ms9/cat-6576397-1280.jpg" },
-        { src: "https://i.ibb.co/mzC8Ms9/cat-6576397-1280.jpg" },
-        { src: "https://i.ibb.co/mzC8Ms9/cat-6576397-1280.jpg" },
+        { id: 1, src: "https://i.ibb.co/jyBfpfh/bird-of-paradise-flower-6632515-1280.jpg" },
+        { id: 2, src: "https://i.ibb.co/mzC8Ms9/cat-6576397-1280.jpg" },
+        { id: 3, src: "https://i.ibb.co/mzC8Ms9/cat-6576397-1280.jpg" },
+        { id: 4, src: "https://i.ibb.co/mzC8Ms9/cat-6576397-1280.jpg" },
+        { id: 5, src: "https://i.ibb.co/mzC8Ms9/cat-6576397-1280.jpg" },
       ],
       Comments: [
         {
+          id: 1,
           User: {
             id: 1,
             nickname: 'minjae',
@@ -34,6 +35,7 @@ const initialState: PostState = {
           content: '우와 개정판이 나왔군요~1'
         },
         {
+          id: 2,
           User: {
             id: 2,
             nickname: 'yeonjae',
@@ -47,6 +49,9 @@ const initialState: PostState = {
   addPostLoading: false,
   addPostDone: false,
   addPostError: null,
+  removePostLoading: false,
+  removePostDone: false,
+  removePostError: null,
   addCommentLoading: false,
   addCommentDone: false,
   addCommentError: null,
@@ -68,6 +73,7 @@ const dummyPost = (data: string) => {
 
 const dummyComment = (content: string) => {
   return {
+    id: 1,
     User: {
       id:1,
       nickname: "minjae"
@@ -91,7 +97,7 @@ const PostReducer = (
     case postTypes.ADD_POST_SUCCESS:
       return {
         ...state,
-        mainPosts: [ dummyPost(action.data), ...state.mainPosts ],
+        mainPosts: [ dummyPost(action.data.content), ...state.mainPosts ],
         addPostLoading: false,
         addPostDone: true,
       };
@@ -126,6 +132,26 @@ const PostReducer = (
         ...state,
         addCommentLoading: false,
         addCommentError: action.error,
+      };
+    case postTypes.REMOVE_POST_REQUEST:
+      return {
+        ...state,
+        addPostLoading: true,
+        removePostDone: false,
+        removePostError: null,
+      };
+    case postTypes.REMOVE_POST_SUCCESS:
+      return {
+        ...state,
+        mainPosts: state.mainPosts.filter((v:any) => v.id !== action.data.id),
+        removePostLoading: false,
+        removePostDone: true,
+      };
+    case postTypes.REMOVE_POST_FAILURE:
+      return {
+        ...state,
+        removePostLoading: false,
+        removePostError: action.error,
       };
     default:
       return state;
