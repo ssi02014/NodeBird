@@ -21,6 +21,9 @@ const initialState: UserState = {
   signUpLoading: false,
   signUpDone: false,
   signUpError: null,
+  changeNicknameLoading: false,
+  changeNicknameDone: false,
+  changeNicknameError: null,
   me: null,
   signUpData : {},
   loginData: {},
@@ -91,6 +94,25 @@ const userReducer = (
         ...state,
         signUpLoading: false,
         signUpError: action.error,
+      }
+    case userTypes.CHANGE_NICKNAME_REQUEST: 
+      return {
+        ...state,
+        changeNicknameLoading: true,
+        changeNicknameDone: false,
+        changeNicknameError: null,
+      }
+    case userTypes.CHANGE_NICKNAME_SUCCESS:
+      return {
+        ...state,
+        changeNicknameLoading: false,
+        changeNicknameDone: true,
+      }
+    case userTypes.CHANGE_NICKNAME_FAILURE:
+      return {
+        ...state,
+        changeNicknameLoading: false,
+        changeNicknameError: action.error,
       }
     default:
       return state;

@@ -22,8 +22,8 @@ const PostForm = () => {
 
   const onSubmit = useCallback(() => {
     const { text } = formValues;
-    dispatch(addPostRequestAction(text));
-  }, []);
+    if (text) dispatch(addPostRequestAction(text));
+  }, [dispatch, formValues]);
 
   useEffect(() => {
     if (addPostDone) {

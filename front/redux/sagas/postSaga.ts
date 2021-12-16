@@ -7,15 +7,16 @@ function addPostAPI(data: any) {
 }
 
 function* addPost(action: any) {
+  console.log(action);
   try {
     // const result:Generator = yield call(addPostAPI, action.data);
     yield delay(1000);
     yield put({
       type: postTypes.ADD_POST_SUCCESS,
-      // data: result.data
+      data: action.data
     });
   } catch (err: any) {
-    const { response }= err;
+    const { response } = err;
     yield put({
       type: postTypes.ADD_POST_FAILURE,
       data: response.data
@@ -33,7 +34,7 @@ function* addComment(action: any) {
     yield delay(1000);
     yield put({
       type: postTypes.ADD_COMMENT_SUCCESS,
-      // data: result.data
+      data: action.data
     });
   } catch (err:any) {
     const { response }= err;

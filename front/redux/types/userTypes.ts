@@ -25,6 +25,9 @@ export interface UserState {
   signUpLoading: boolean,
   signUpDone: boolean,
   signUpError: boolean | null,
+  changeNicknameLoading: boolean,
+  changeNicknameDone: boolean,
+  changeNicknameError: boolean | null,
   me: Data | null;
   signUpData : Object;
   loginData: Object;
@@ -75,6 +78,21 @@ export interface signupFailureAction {
   error: any;
 }
 
+export interface changeNicknameRequestAction {
+  type: typeof userTypes.CHANGE_NICKNAME_REQUEST;
+  data: any;
+}
+
+export interface changeNicknameSuccessAction {
+  type: typeof userTypes.CHANGE_NICKNAME_SUCCESS;
+  data: any;
+}
+
+export interface changeNicknameFailureAction {
+  type: typeof userTypes.CHANGE_NICKNAME_FAILURE;
+  error: any;
+}
+
 export type UserActions = 
   LoginRequestAction | 
   LoginSuccessAction | 
@@ -84,6 +102,9 @@ export type UserActions =
   LogoutFailureAction |
   signupRequestAction |
   signupSuccessAction |
-  signupFailureAction;
+  signupFailureAction |
+  changeNicknameRequestAction |
+  changeNicknameSuccessAction |
+  changeNicknameFailureAction;
 
 

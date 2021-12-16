@@ -6,13 +6,14 @@ export interface ImageSrc {
 
 export interface Comments {
   User: {
+    id: number | string;
     nickname: string;
   },
   content: string;
 };
 
 export interface MainPosts {
-  id: number;
+  id: number | string;
   User: {
     id: number;
     nickname: string;

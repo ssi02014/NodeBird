@@ -22,7 +22,7 @@ interface InitialValue {
 
 const CommentForm = ({ post }: Props) => {
   const id = useSelector((state:RootState) => state.user.me?.id);
-  const { addCommentDone } = useSelector((state:RootState) => state.post);
+  const { addCommentDone, addCommentLoading } = useSelector((state:RootState) => state.post);
   const [ formValues, onChange, onReset ] = useInput({
     commentText: "",
   });
@@ -34,7 +34,7 @@ const CommentForm = ({ post }: Props) => {
     dispatch({
       type: postTypes.ADD_COMMENT_REQUEST,
       data: { 
-        content: formValues, 
+        content: commentText, 
         postId: post.id, 
         userId: id 
       },
@@ -56,7 +56,7 @@ const CommentForm = ({ post }: Props) => {
         rows={4}
       />
       <CustomButton type="primary" htmlType="submit">
-        삐약
+        업로드
       </CustomButton>
     </FormWrapper>
   );

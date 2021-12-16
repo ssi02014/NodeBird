@@ -27,8 +27,6 @@ const LoginForm = () => {
       onReset();
     }
   }, [formValues]);
-
-  console.log(formValues);
   
   return (
     <FormWrapper onFinish={onSubmit}>
