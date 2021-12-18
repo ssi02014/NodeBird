@@ -30,13 +30,13 @@ export interface PostState {
   imagePaths: string[];
   addPostLoading: boolean;
   addPostDone: boolean;
-  addPostError: boolean | null;
+  addPostError: boolean;
   removePostLoading: boolean,
   removePostDone: boolean,
-  removePostError: boolean | null;
+  removePostError: boolean;
   addCommentLoading: boolean,
   addCommentDone: boolean,
-  addCommentError: boolean | null;
+  addCommentError: boolean;
 };
 
 export interface AddPostRequest {

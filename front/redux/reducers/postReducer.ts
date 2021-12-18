@@ -1,6 +1,6 @@
 import { PostActions, PostState } from "redux/types/postTypes";
 import { postTypes } from "redux/Actiontypes/postActionTypes";
-
+import produce from "immer";
 
 export const addPostRequestAction = (data: string) => {
   return {
@@ -48,13 +48,13 @@ const initialState: PostState = {
   imagePaths: [],
   addPostLoading: false,
   addPostDone: false,
-  addPostError: null,
+  addPostError: false,
   removePostLoading: false,
   removePostDone: false,
-  removePostError: null,
+  removePostError: false,
   addCommentLoading: false,
   addCommentDone: false,
-  addCommentError: null,
+  addCommentError: false,
 };
 
 let globalNum = 2;
@@ -86,76 +86,57 @@ const PostReducer = (
   state = initialState, 
   action: PostActions
 ): PostState => {
-  switch(action.type) {
-    case postTypes.ADD_POST_REQUEST:
-      return {
-        ...state,
-        addPostLoading: true,
-        addPostDone: false,
-        addPostError: null,
-      };
-    case postTypes.ADD_POST_SUCCESS:
-      return {
-        ...state,
-        mainPosts: [ dummyPost(action.data.content), ...state.mainPosts ],
-        addPostLoading: false,
-        addPostDone: true,
-      };
-    case postTypes.ADD_POST_FAILURE:
-      return {
-        ...state,
-        addPostLoading: false,
-        addPostError: action.error,
-      };
-    case postTypes.ADD_COMMENT_REQUEST:
-      return {
-        ...state,
-        addCommentLoading: true,
-        addCommentDone: false,
-        addCommentError: null,
-      };
-    case postTypes.ADD_COMMENT_SUCCESS: 
-      const postIndex = state.mainPosts.findIndex((post) => post.id === action.data.postId);
-      const post = { ...state.mainPosts[postIndex] };
-      post.Comments = [dummyComment(action.data.content), ...post.Comments];
-      const mainPosts = [...state.mainPosts];
-      mainPosts[postIndex] = post;
-
-      return {
-        ...state,
-        mainPosts,
-        addCommentLoading: false,
-        addCommentDone: true,
-      };
-    case postTypes.ADD_COMMENT_FAILURE:
-      return {
-        ...state,
-        addCommentLoading: false,
-        addCommentError: action.error,
-      };
-    case postTypes.REMOVE_POST_REQUEST:
-      return {
-        ...state,
-        addPostLoading: true,
-        removePostDone: false,
-        removePostError: null,
-      };
-    case postTypes.REMOVE_POST_SUCCESS:
-      return {
-        ...state,
-        mainPosts: state.mainPosts.filter((v:any) => v.id !== action.data.id),
-        removePostLoading: false,
-        removePostDone: true,
-      };
-    case postTypes.REMOVE_POST_FAILURE:
-      return {
-        ...state,
-        removePostLoading: false,
-        removePostError: action.error,
-      };
-    default:
-      return state;
-  }
+  return produce(state, (draft) => {
+    switch (action.type) {
+      case postTypes.ADD_POST_REQUEST:
+        draft.addPostLoading = true;
+        draft.addPostDone = false;
+        draft.addPostError = false;
+        break;
+      case postTypes.ADD_POST_SUCCESS:
+        draft.addPostLoading = false;
+        draft.addPostDone = true;
+        // draft.mainPosts = [ dummyPost(action.data.content), ...state.mainPosts ];
+        draft.mainPosts.unshift(dummyPost(action.data.content));
+        break;
+      case postTypes.ADD_POST_FAILURE:
+        draft.addPostLoading = false;
+        draft.addPostError = action.error;
+        break;
+      case postTypes.ADD_COMMENT_REQUEST:
+        draft.addCommentLoading = true;
+        draft.addCommentDone = false;
+        draft.addCommentError = false;
+        break;
+      case postTypes.ADD_COMMENT_SUCCESS: 
+        const post = draft.mainPosts.find((v) => v.id === action.data.postId);
+        post?.Comments.unshift(dummyComment(action.data.content));
+        draft.addCommentLoading = false;
+        draft.addCommentDone = true;
+        break;
+      case postTypes.ADD_COMMENT_FAILURE:
+        draft.addCommentLoading = false;
+        draft.addCommentError = action.error;
+        break;
+      case postTypes.REMOVE_POST_REQUEST:
+        draft.removePostLoading = true;
+        draft.removePostDone = false;
+        draft.removePostError = false;
+        break;
+      case postTypes.REMOVE_POST_SUCCESS:
+        draft.removePostLoading = false;
+        draft.removePostDone = true;
+        draft.mainPosts = draft.mainPosts.filter((v:any) => v.id !== action.data.id);
+        break;
+      case postTypes.REMOVE_POST_FAILURE:
+        draft.removePostLoading = false;
+        draft.removePostError = action.error;
+        break;
+      default:
+        draft;
+        break;
+    }
+  });
 }
 
 export default PostReducer;

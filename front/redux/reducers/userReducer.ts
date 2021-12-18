@@ -1,6 +1,7 @@
 import { userTypes } from 'redux/Actiontypes/userActionTypes';
-import { Data, UserActions, UserState } from "redux/types/userTypes";
+import { UserActions, UserState } from "redux/types/userTypes";
 import { dummyUser } from 'utils/dummy';
+import produce from 'immer';
 
 export const loginRequestAction = (data: any) => ({
   type: userTypes.LOG_IN_REQUEST,
@@ -34,105 +35,74 @@ const userReducer = (
   state = initialState, 
   action: UserActions
 ): UserState => {
-  switch(action.type) {
-    case userTypes.LOG_IN_REQUEST: 
-      return {
-        ...state,
-        logInLoading: true,
-        logInError: null,
-        logInDone: false,
-      };
-    case userTypes.LOG_IN_SUCCESS:
-      return {
-        ...state,
-        logInLoading: false,
-        logInDone: true,
-        me: dummyUser(action.data),
-      };
-    case userTypes.LOG_IN_FAILURE:
-      return {
-        ...state,
-        logInLoading: false,
-        logInError: action.error,
-      };
-    case userTypes.LOG_OUT_REQUEST: 
-      return {
-        ...state,
-        logOutLoading: true,
-        logOutDone: false,
-        logOutError: null,
-      };
-    case userTypes.LOG_OUT_SUCCESS:
-      return {
-        ...state,
-        logInDone: false,
-        logOutLoading: false,
-        logOutDone: true,
-        me: null,
-      };
-    case userTypes.LOG_OUT_FAILURE:
-      return {
-        ...state,
-        logOutLoading: false,
-        logOutError: action.error,
-      };
-    case userTypes.SIGN_UP_REQUEST: 
-      return {
-        ...state,
-        signUpLoading: true,
-        signUpDone: false,
-        signUpError: null,
-      };
-    case userTypes.SIGN_UP_SUCCESS:
-      return {
-        ...state,
-        signUpLoading: false,
-        signUpDone: true,
-      };
-    case userTypes.SIGN_UP_FAILURE:
-      return {
-        ...state,
-        signUpLoading: false,
-        signUpError: action.error,
-      };
-    case userTypes.CHANGE_NICKNAME_REQUEST: 
-      return {
-        ...state,
-        changeNicknameLoading: true,
-        changeNicknameDone: false,
-        changeNicknameError: null,
-      };
-    case userTypes.CHANGE_NICKNAME_SUCCESS:
-      return {
-        ...state,
-        changeNicknameLoading: false,
-        changeNicknameDone: true,
-      };
-    case userTypes.CHANGE_NICKNAME_FAILURE:
-      return {
-        ...state,
-        changeNicknameLoading: false,
-        changeNicknameError: action.error,
-      };
-    case userTypes.ADD_POST_TO_ME:
-      return {
-        ...state,
-        me: {
-          ...state.me,
-          Posts: [{ id: action.data }, ...state.me.Posts],
-        }
-      };
-    case userTypes.REMOVE_POST_OF_ME:
-        return {
-          ...state,
-          me: {
-            ...state.me,
-            Posts: state.me.Posts.filter((v:any) => v.id !== action.data)
-          }
-        };
-    default:
-      return state;
-  }
+  return produce(state, (draft) => {
+    switch (action.type) {
+      case userTypes.LOG_IN_REQUEST: 
+        draft.logInLoading = true;
+        draft.logInDone = false;
+        draft.logInError = false;
+        break;
+      case userTypes.LOG_IN_SUCCESS:
+        draft.logInLoading = false;
+        draft.logInDone = true;
+        draft.me = dummyUser(action.data);
+        break;
+      case userTypes.LOG_IN_FAILURE:
+        draft.logInLoading = false;
+        draft.logInError = action.error;
+        break;
+      case userTypes.LOG_OUT_REQUEST: 
+        draft.logOutLoading = true;
+        draft.logOutDone = false;
+        draft.logOutError = false;
+        break;
+      case userTypes.LOG_OUT_SUCCESS:
+        draft.logInDone = false;
+        draft.logOutLoading = false;
+        draft.logOutDone = true;
+        draft.me = null;
+        break;
+      case userTypes.LOG_OUT_FAILURE:
+        draft.logOutLoading = false;
+        draft.logOutError = action.error;
+        break;
+      case userTypes.SIGN_UP_REQUEST: 
+        draft.logOutLoading = true;
+        draft.logOutDone = false;
+        draft.logOutError = null;
+        break;
+      case userTypes.SIGN_UP_SUCCESS:
+        draft.signUpLoading = false;
+        draft.signUpDone = true;
+        break;
+      case userTypes.SIGN_UP_FAILURE:
+        draft.signUpLoading = false;
+        draft.signUpError = action.error;
+        break;
+      case userTypes.CHANGE_NICKNAME_REQUEST: 
+        draft.changeNicknameLoading = true;
+        draft.changeNicknameDone = false;
+        draft.changeNicknameError = null;
+        break;
+      case userTypes.CHANGE_NICKNAME_SUCCESS:
+        draft.changeNicknameLoading = false;
+        draft.changeNicknameDone = true;
+        break;
+      case userTypes.CHANGE_NICKNAME_FAILURE:
+        draft.changeNicknameLoading = false;
+        draft.changeNicknameError = action.error;
+        break;
+      case userTypes.ADD_POST_TO_ME:
+        draft.me.Posts.unshift({ id: action.data });
+        break;
+      case userTypes.REMOVE_POST_OF_ME:
+        draft.me.Posts = draft.me.Posts.filter((v:any) => v.id !== action.data);
+        break;
+      default:
+        draft;
+        break;
+    }
+  });
 }
 
 export default userReducer;

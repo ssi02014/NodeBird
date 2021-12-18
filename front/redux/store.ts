@@ -8,9 +8,9 @@ import {
   compose, 
   applyMiddleware,
   Middleware, 
-  StoreEnhancer, 
-  Store, 
-  AnyAction 
+  StoreEnhancer,
+  Store,
+  AnyAction, 
 } from "redux";
 
 const initialState = {};
@@ -31,7 +31,7 @@ const configureStore = () => {
   const middleware = [sagaMiddleware];
 
   const store = createStore(rootReducer, initialState, bindMiddleware([...middleware]));
-  (store as SagaStore).sagaTask = sagaMiddleware.run(rootSaga);
+  (<SagaStore>store).sagaTask = sagaMiddleware.run(rootSaga);
   return store;
 }
 
