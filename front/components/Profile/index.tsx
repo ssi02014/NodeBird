@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
 import { Avatar, Button, Card } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutRequestAction } from "redux/reducers/userReducer";
@@ -11,14 +11,6 @@ const Profile = () => {
   const onLogout = useCallback(() => {
     dispatch(logoutRequestAction());
   }, []);
-
-  useEffect(() => {
-    if (!(me && me.id)) {
-      Router.push("/");
-    }
-  }, [me && me.id]);
-  if (!me) return null;
-
   return (
     <Card
       actions={[
