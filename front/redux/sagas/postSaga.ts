@@ -1,14 +1,23 @@
 import { all, delay, put, takeLatest, fork } from "@redux-saga/core/effects";
 import axios from "axios";
 import { userTypes } from "redux/Actiontypes/userActionTypes";
+import { generateDummyPost } from "redux/reducers/postReducer";
 import { postTypes } from '../Actiontypes/postActionTypes';
+
+// interface Payload {
+//   country?: string
+// }
+
+interface Action {
+  type: string;
+  data: any;
+}
 
 function addPostAPI(data: any) {
   return axios.post('/api/post', data);
 }
 
-function* addPost(action: any) {
-  console.log(action);
+function* addPost(action: Action) {
   try {
     // const result:Generator = yield call(addPostAPI, action.data);
     yield delay(1000);
@@ -37,7 +46,7 @@ function addCommentAPI(data: any) {
   return axios.post(`/api/post/${data.postId}/comment`, data);
 }
 
-function* addComment(action: any) {
+function* addComment(action: Action) {
   try {
     // const result:Generator = yield call(addCommentAPI, action.data);
     yield delay(1000);
@@ -59,7 +68,7 @@ function removePostAPI(data: any) {
 }
 
 
-function* removePost(action: any) {
+function* removePost(action: Action) {
   try {
     // const result:Generator = yield call(addCommentAPI, action.data);
     const id = 2;
@@ -84,6 +93,28 @@ function* removePost(action: any) {
   }
 }
 
+function loadPostsAPI(data: any) {
+  return axios.delete('/api/posts', data);
+}
+
+
+function* loadPosts(action: Action) {
+  try {
+    // const result:Generator = yield call(addCommentAPI, action.data);
+    yield delay(1000);
+    yield put({
+      type: postTypes.LOAD_POSTS_SUCCESS,
+      data: generateDummyPost(10),
+    });
+  } catch (err:any) {
+    const { response } = err;
+    yield put({
+      type: postTypes.LOAD_POSTS_FAILURE,
+      data: response.data
+    });
+  }
+}
+
 // watch
 function* watchAddPost() {
   yield takeLatest(postTypes.ADD_POST_REQUEST, addPost);
@@ -97,10 +128,15 @@ function* watchRemovePost() {
   yield takeLatest(postTypes.REMOVE_POST_REQUEST, removePost);
 }
 
+function* watchLoadPost() {
+  yield takeLatest(postTypes.LOAD_POSTS_REQUEST, loadPosts);
+}
+
 export default function* postSage() {
   yield all([
     fork(watchAddPost),
     fork(watchAddComment),
     fork(watchRemovePost),
+    fork(watchLoadPost),
   ]);
 }

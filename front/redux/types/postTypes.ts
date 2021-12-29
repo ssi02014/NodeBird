@@ -28,6 +28,10 @@ export interface MainPosts {
 export interface PostState {
   mainPosts: MainPosts[];
   imagePaths: string[];
+  hasMorePost: boolean;
+  loadPostsLoading: boolean;
+  loadPostsDone: boolean;
+  loadPostsError: boolean;
   addPostLoading: boolean;
   addPostDone: boolean;
   addPostError: boolean;
@@ -41,7 +45,6 @@ export interface PostState {
 
 export interface AddPostRequest {
   type: typeof postTypes.ADD_POST_REQUEST;
-  data: any;
 }
 
 export interface AddPostSuccess {
@@ -56,7 +59,6 @@ export interface AddPostFailure {
 
 export interface AddCommentRequest {
   type: typeof postTypes.ADD_COMMENT_REQUEST;
-  data: any;
 }
 
 export interface AddCommentSuccess {
@@ -71,7 +73,6 @@ export interface AddCommentFailure {
 
 export interface RemovePostRequest {
   type: typeof postTypes.REMOVE_POST_REQUEST;
-  data: any;
 }
 
 export interface RemovePostSuccess {
@@ -84,6 +85,20 @@ export interface RemovePostFailure {
   error: any;
 }
 
+export interface LoadPostsRequest {
+  type: typeof postTypes.LOAD_POSTS_REQUEST;
+}
+
+export interface LoadPostsSuccess {
+  type: typeof postTypes.LOAD_POSTS_SUCCESS;
+  data: MainPosts[];
+}
+
+export interface LoadPostsFailure {
+  type: typeof postTypes.LOAD_POSTS_FAILURE;
+  error: any;
+}
+
 export type PostActions = 
   AddPostRequest |
   AddPostSuccess |
@@ -93,4 +108,7 @@ export type PostActions =
   AddCommentFailure |
   RemovePostRequest |
   RemovePostSuccess |
-  RemovePostFailure;
+  RemovePostFailure |
+  LoadPostsRequest |
+  LoadPostsSuccess |
+  LoadPostsFailure;

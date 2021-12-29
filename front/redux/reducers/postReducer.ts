@@ -10,45 +10,12 @@ export const addPostRequestAction = (data: string) => {
 };
 
 const initialState: PostState = {
-  mainPosts: [
-    {
-      id: 1,
-      User: {
-        id: 1,
-        nickname: "제로초",
-      },
-      content: "첫 번째 게시글 #해시태그 #익스프레스",
-      Images: [
-        {
-          id: 1,
-          src: "https://i.ibb.co/jyBfpfh/bird-of-paradise-flower-6632515-1280.jpg",
-        },
-        { id: 2, src: "https://i.ibb.co/mzC8Ms9/cat-6576397-1280.jpg" },
-        { id: 3, src: "https://i.ibb.co/mzC8Ms9/cat-6576397-1280.jpg" },
-        { id: 4, src: "https://i.ibb.co/mzC8Ms9/cat-6576397-1280.jpg" },
-        { id: 5, src: "https://i.ibb.co/mzC8Ms9/cat-6576397-1280.jpg" },
-      ],
-      Comments: [
-        {
-          id: 1,
-          User: {
-            id: 1,
-            nickname: "minjae",
-          },
-          content: "우와 개정판이 나왔군요~1",
-        },
-        {
-          id: 2,
-          User: {
-            id: 2,
-            nickname: "yeonjae",
-          },
-          content: "우와 개정판이 나왔군요~2",
-        },
-      ],
-    },
-  ],
+  mainPosts: [],
   imagePaths: [],
+  hasMorePost: true,
+  loadPostsLoading: false,
+  loadPostsDone: false,
+  loadPostsError: false,
   addPostLoading: false,
   addPostDone: false,
   addPostError: false,
@@ -86,13 +53,33 @@ const dummyComment = (content: string) => {
   };
 };
 
-for (let i = 0; i < 30; i++) {
-  initialState.mainPosts = initialState.mainPosts.concat(dummyPost("123"));
+export const generateDummyPost = (number: number) => {
+  let list: any[] = [];
+
+  for(let i = 0; i < number; i++) {
+    list = [...list, dummyPost("123")];
+  }
+  return list;
 }
 
 const PostReducer = (state = initialState, action: PostActions): PostState => {
   return produce(state, (draft) => {
     switch (action.type) {
+      case postTypes.LOAD_POSTS_REQUEST:
+        draft.addPostLoading = true;
+        draft.addPostDone = false;
+        draft.addPostError = false;
+        break;
+      case postTypes.LOAD_POSTS_SUCCESS:
+        draft.addPostLoading = false;
+        draft.addPostDone = true;
+        draft.mainPosts = action.data.concat(draft.mainPosts);
+        draft.hasMorePost = draft.mainPosts.length < 50;
+        break;
+      case postTypes.LOAD_POSTS_FAILURE:
+        draft.addPostLoading = false;
+        draft.addPostError = action.error;
+        break;
       case postTypes.ADD_POST_REQUEST:
         draft.addPostLoading = true;
         draft.addPostDone = false;
@@ -101,7 +88,6 @@ const PostReducer = (state = initialState, action: PostActions): PostState => {
       case postTypes.ADD_POST_SUCCESS:
         draft.addPostLoading = false;
         draft.addPostDone = true;
-        // draft.mainPosts = [ dummyPost(action.data.content), ...state.mainPosts ];
         draft.mainPosts.unshift(dummyPost(action.data.content));
         break;
       case postTypes.ADD_POST_FAILURE:
