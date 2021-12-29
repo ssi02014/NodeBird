@@ -66,19 +66,19 @@ const PostReducer = (state = initialState, action: PostActions): PostState => {
   return produce(state, (draft) => {
     switch (action.type) {
       case postTypes.LOAD_POSTS_REQUEST:
-        draft.addPostLoading = true;
-        draft.addPostDone = false;
-        draft.addPostError = false;
+        draft.loadPostsLoading = true;
+        draft.loadPostsDone = false;
+        draft.loadPostsError = false;
         break;
       case postTypes.LOAD_POSTS_SUCCESS:
-        draft.addPostLoading = false;
-        draft.addPostDone = true;
+        draft.loadPostsLoading = false;
+        draft.loadPostsDone = true;
         draft.mainPosts = action.data.concat(draft.mainPosts);
         draft.hasMorePost = draft.mainPosts.length < 50;
         break;
       case postTypes.LOAD_POSTS_FAILURE:
-        draft.addPostLoading = false;
-        draft.addPostError = action.error;
+        draft.loadPostsLoading = false;
+        draft.loadPostsError = action.error;
         break;
       case postTypes.ADD_POST_REQUEST:
         draft.addPostLoading = true;

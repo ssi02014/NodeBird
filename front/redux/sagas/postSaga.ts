@@ -1,5 +1,6 @@
 import { all, delay, put, takeLatest, fork } from "@redux-saga/core/effects";
 import axios from "axios";
+import { throttle } from "redux-saga/effects";
 import { userTypes } from "redux/Actiontypes/userActionTypes";
 import { generateDummyPost } from "redux/reducers/postReducer";
 import { postTypes } from '../Actiontypes/postActionTypes';
@@ -101,7 +102,6 @@ function loadPostsAPI(data: any) {
 function* loadPosts(action: Action) {
   try {
     // const result:Generator = yield call(addCommentAPI, action.data);
-    yield delay(1000);
     yield put({
       type: postTypes.LOAD_POSTS_SUCCESS,
       data: generateDummyPost(10),
@@ -129,7 +129,7 @@ function* watchRemovePost() {
 }
 
 function* watchLoadPost() {
-  yield takeLatest(postTypes.LOAD_POSTS_REQUEST, loadPosts);
+  yield throttle(2000, postTypes.LOAD_POSTS_REQUEST, loadPosts);
 }
 
 export default function* postSage() {

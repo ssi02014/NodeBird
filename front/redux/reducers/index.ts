@@ -6,27 +6,28 @@ import post from './postReducer';
 import { UserState } from "redux/types/userTypes";
 import { PostState } from "redux/types/postTypes";
 
-interface Hydrate {
-  type: typeof HYDRATE,
-  payload: {
-    user: UserState,
-    post: PostState,
-  },
-}
+// interface Hydrate {
+//   type: typeof HYDRATE,
+//   payload: {
+//     user: UserState,
+//     post: PostState,
+//   },
+// }
 
-const rootReducer = combineReducers({
-  index: (state:any = {}, action: AnyAction): Hydrate => {
-    console.log('HYDRATE', action);
-    switch (action.type) {
-      case HYDRATE:
-        return { ...state, ...action.payload}
-      default:
-        return state;
+const rootReducer = (state:any = {}, action: AnyAction) => {
+  switch (action.type) {
+    case HYDRATE:
+      console.log('HYDRATE', action);
+      return action.payload;
+    default: {
+      const combinedReducer = combineReducers({
+        user,
+        post,
+      });
+      return combinedReducer(state, action);
     }
-  },
-  user,
-  post,
-});
+  }
+};
 
 export default rootReducer;
 
