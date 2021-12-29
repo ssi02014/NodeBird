@@ -7,7 +7,7 @@ import { userTypes } from 'redux/Actiontypes/userActionTypes';
 import { RootState } from 'redux/reducers';
 
 const RegisterForm= () => {
-  const [ formValues, onChange ] = useInput({
+  const [formValues, onChange] = useInput({
     email: "",
     nickname: "",
     password: "",
@@ -68,7 +68,7 @@ const RegisterForm= () => {
           type="email" 
           name="email"
           id="register-email"
-          value={formValues.id}
+          value={formValues.email}
           onChange={onChange}
           required
         />
